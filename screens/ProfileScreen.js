@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, Picker } from 'react-native';
 import React, { Component } from 'react';
 import { Container, Header, Content, Tab, Tabs } from 'native-base';
+import axios from 'axios';
 import Tab1 from './tabOne';
 import Tab2 from './tabTwo';
 import Tab3 from './tabThree';
@@ -11,16 +12,7 @@ const Bought_INDEX = 0;
 const Ari_INDEX = 1;
 const Imahax_INDEX = 2;
 const Nai_INDEX = 3;
-export const datas = [
-  'Simon Mignolet',
-  'Nathaniel Clyne',
-  'Dejan Lovren',
-  'Mama Sakho',
-  'Alberto Moreno',
-  'Emre Can',
-  'Joe Allen',
-  'Phil Coutinho',
-];
+export const datas = axios.get
 const allWorksTmp = [
   {
     gamename: 'a' ,
@@ -52,7 +44,7 @@ class ProfileScreen extends React.Component {
     super(props); 
 
     this.state = {
-      selectedIndex: 0,
+      mydatas: [],
     };
   }
 
