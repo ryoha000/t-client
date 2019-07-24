@@ -18,6 +18,8 @@ import WorkScreen from './screens/WorkScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import TwitterScreen from './screens/TwitterScreen';
 import ConfigScreen from './screens/ConfigScreen';
+import LoginScreen from './screens/LoginScreen'
+import SignupScreen from './screens/SignupScreen'
 
 
 export default class App extends React.Component {
@@ -88,11 +90,23 @@ export default class App extends React.Component {
           headerTitle: 'Twitter連携',
         },
       },
-      work: { screen: WorkScreen },
       config: { screen: ConfigScreen,
         navigationOptions: {
           ...headerNavigationOptions,
           headerTitle: 'Config',
+       }
+      },
+      login: { screen: LoginScreen,
+        navigationOptions: {
+          ...headerNavigationOptions,
+          headerTitle: 'Login',
+       }
+      },
+      work: { screen: WorkScreen },
+      signup: { screen: SignupScreen,
+        navigationOptions: {
+          ...headerNavigationOptions,
+          headerTitle: 'Signup',
        }
       },
     });

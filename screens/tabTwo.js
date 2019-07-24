@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { Container, Content, Button, Icon, List, ListItem, Text } from 'native-base';
-import {datas} from './ProfileScreen.js'
+// import {datas} from './ProfileScreen.js'
 
 export default class Tab2 extends Component {
   constructor(props) {
