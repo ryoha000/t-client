@@ -38,7 +38,12 @@ class ProfileScreen extends React.Component {
             </Card>;
     });
   }
-
+  rButtonParent = (newElement) => {
+    this.setState(state => {
+      state.myGames[state.myGames.findIndex(e => e.gameid === newElement.gameid)].intention = state.myGames[state.myGames.findIndex(e => e.gameid === newElement.gameid)].intention -1;
+      return { myGames: state.myGames }
+    })
+  };
   // rightButtonFunc() {
   //   this.setState({ myGames: this.intention-1 });
   // }
@@ -80,24 +85,33 @@ class ProfileScreen extends React.Component {
     const d = `興味なし(${nNai})`;
     return (
       <Container backgroundColor="#00CCFF">
-        <ScrollView>{this.renderGames()}</ScrollView>
+        {/* <ScrollView>{this.renderGames()}</ScrollView> */}
+        <Tabs locked={true} backgroundColor='#00CCFF'>
+          <Tab heading={a} backgroundColor='#00CCFF'>
+            <Tab1 
+            rButton={this.rButtonParent}
+            myGames={this.state.myGames}
+            />
+          </Tab>
+          <Tab heading={b}>
+            <Tab2 
+            myGames={this.state.myGames}
+            />
+          </Tab>
+          <Tab heading={c}>
+            <Tab3 
+            myGames={this.state.myGames}
+            />
+          </Tab>
+          <Tab heading={d}>
+            <Tab4 
+            myGames={this.state.myGames}
+            />
+          </Tab>
+        </Tabs>
         <Button onPress={() => this.props.navigation.navigate('config')}>
           <Text>config</Text>
         </Button>
-        {/* <Tabs locked={true} backgroundColor='#00CCFF'>
-          <Tab heading={a} backgroundColor='#00CCFF'>
-            <Tab1 myGames={this.state.myGames}/>
-          </Tab>
-          <Tab heading={b}>
-            <Tab2 myGames={this.state.myGames}/>
-          </Tab>
-          <Tab heading={c}>
-            <Tab3 myGames={this.state.myGames}/>
-          </Tab>
-          <Tab heading={d}>
-            <Tab4 myGames={this.state.myGames}/>
-          </Tab>
-        </Tabs> */}
       </Container>
     );
   }
