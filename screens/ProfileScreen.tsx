@@ -52,6 +52,12 @@ class ProfileScreen extends React.Component {
       return { myGames: state.myGames }
     })
   };
+  lButtonParent = (newElement) => {
+    this.setState(state => {
+      state.myGames[state.myGames.findIndex(e => e.gameid === newElement.gameid)].intention = state.myGames[state.myGames.findIndex(e => e.gameid === newElement.gameid)].intention +1;
+      return { myGames: state.myGames }
+    })
+  };
   render() {
     let nBought = 0;
     let nAri = 0;
@@ -97,6 +103,8 @@ class ProfileScreen extends React.Component {
           </Tab>
           <Tab heading={b}>
             <Tab2 
+            rButton={this.rButtonParent}
+            lButton={this.lButtonParent}
             myGames={this.state.myGames.filter(function (item,index,array){return (item.intentiion == 2)})}
             />
           </Tab>

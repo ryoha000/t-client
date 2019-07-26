@@ -5,7 +5,7 @@ import { Container, Header, Content, Button, Icon, List, ListItem, Text } from '
 const propTypes = {
   myGames: PropTypes.func,
 };
-interface props{
+interface Props{
   myGames:{
     gameID:number;
     gamename:{
@@ -18,39 +18,42 @@ interface props{
     };
     intention:number;
     brandname:string;
-  };
+  }[];
   rButton:(gameid:number) => number;
+  lButton:(gameid:number) => number;
 }
-interface state{
+interface State{
   basic: boolean;
   listViewData:{
-    gameID:number;
-    gamename:{
-      String:string;
-      Valid:boolean;
+    myGames:{
+      gameID:number;
+      gamename:{
+        String:string;
+        Valid:boolean;
+      };
+      median:{
+        Int64:number;
+        Vaild:boolean;
+      };
+      intention:number;
+      brandname:string;
     };
-    median:{
-      Int64:number;
-      Vaild:boolean;
-    };
-    intention:number;
-    brandname:string;
-  };
+  }
 }
 
-export default class Tab2 extends Component {
+export default class Tab2 extends Component<Props,State> {
   ds: any;
 
-  constructor(props) {
-    super(props);
+  constructor(Props) {
+    super(Props);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.state = {
+    this.State = {
       basic: true,
-      listViewData: this.props.myGames,
-      // myGames: this.props.myGames
+      listViewData: this.Props.myGames,
+      // myGames: this.Props.myGames
     };
-    console.log(this.state.listViewData,'a')
-    console.log(this.props.myGames,'b')
+    console.log(this.State.listViewData,'a')
+    console.log(this.Props.myGames,'b')
   }
   
   render() {
@@ -61,7 +64,7 @@ export default class Tab2 extends Component {
           <List
             leftOpenValue={75}
             rightOpenValue={-75}
-            dataSource={this.ds.cloneWithRows(this.state.listViewData)}
+            dataSource={this.ds.cloneWithRows(this.State.listViewData)}
             renderRow={myGames =>
               <ListItem>
                 <Text> {myGames.gamename} </Text>
@@ -71,7 +74,7 @@ export default class Tab2 extends Component {
             //     <Icon active name="information-circle" />
             //   </Button>}
             renderRightHiddenRow={() =>
-              <Button full danger onPress={() => this.props.rButton()}>
+              <Button full danger onPress={() => this.Props.rButton()}>
                 <Icon active name="arrow-right" />
               </Button>}
           />
