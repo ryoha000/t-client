@@ -4,6 +4,7 @@ import { Button} from 'react-native-elements';
 
 
 class ConfigScreen extends React.Component {
+  props: any;
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>

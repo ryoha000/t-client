@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, Picker } from "react-native";
 import React, { Component } from "react";
-import { Container, Header, Content, Tab, Tabs,Button,Card ,CardItem} from "native-base";
+import { Container, Header, Content, Tab, Tabs,Button,Card ,CardItem, List,ListItem,Icon} from "native-base";
 import axios from "axios";
 import PropTypes from "prop-types";
 import Tab1 from "./tabOne";
@@ -9,6 +9,8 @@ import Tab3 from "./tabThree";
 import Tab4 from "./tabFour";
 
 class ProfileScreen extends React.Component {
+  state: { myGames: any[]; };
+  props: any;
   constructor(props) {
     super(props);
     this.state = {
@@ -23,19 +25,25 @@ class ProfileScreen extends React.Component {
       .then(res => {
         this.setState({ myGames: res.data });
         setTimeout(() => console.log(this.state.myGames), 500);
+        setTimeout(() => console.log(this.state.myGames.filter(function (item,index,array){return (item.intention == 3)})), 500);
       })
       .catch(e => console.log(e));
   }
   renderGames() {
     return this.state.myGames.map(data => {
-      return <Card>
-              <CardItem header bordered>
+      return <List
+                leftOpenValue={75}
+                rightOpenValue={-75}
+                renderRow={myGames =>
+              <ListItem header bordered>
                 <Text onPress={() => this.props.navigation.navigate('work')}>{data.gamename.String}</Text>
-              </CardItem>
-              <CardItem footer bordered>
                 <Text>{data.brandname}</Text>
-              </CardItem>
-            </Card>;
+              </ListItem>}
+              renderRightHiddenRow={() =>
+              <Button full danger onPress={() => this.props.rButton()}>
+                <Icon active name="arrow-right" />
+              </Button>}
+            />;
     });
   }
   rButtonParent = (newElement) => {
@@ -44,12 +52,6 @@ class ProfileScreen extends React.Component {
       return { myGames: state.myGames }
     })
   };
-  // rightButtonFunc() {
-  //   this.setState({ myGames: this.intention-1 });
-  // }
-  // leftButtonFunc() {
-  //   this.setState({ myGames: this.intention+1 });
-  // }
   render() {
     let nBought = 0;
     let nAri = 0;
@@ -90,22 +92,22 @@ class ProfileScreen extends React.Component {
           <Tab heading={a} backgroundColor='#00CCFF'>
             <Tab1 
             rButton={this.rButtonParent}
-            myGames={this.state.myGames}
+            myGames={this.state.myGames.filter(function (item,index,array){return (item.intentiion == 3)})}
             />
           </Tab>
           <Tab heading={b}>
             <Tab2 
-            myGames={this.state.myGames}
+            myGames={this.state.myGames.filter(function (item,index,array){return (item.intentiion == 2)})}
             />
           </Tab>
           <Tab heading={c}>
             <Tab3 
-            myGames={this.state.myGames}
+            myGames={this.state.myGames.filter(function (item,index,array){return (item.intentiion == 1)})}
             />
           </Tab>
           <Tab heading={d}>
             <Tab4 
-            myGames={this.state.myGames}
+            myGames={this.state.myGames.filter(function (item,index,array){return (item.intentiion == 0)})}
             />
           </Tab>
         </Tabs>

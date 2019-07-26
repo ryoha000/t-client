@@ -3,6 +3,8 @@ import { ScrollView } from "react-native";
 import { Container, Content, Form, Item, Picker,Icon ,Button, Text,Header,Input ,Card, CardItem} from 'native-base';
 import axios from 'axios'
 export default class SearchScreen extends Component {
+  state: { selected2: string; word: string; kekka: any[]; };
+  props: any;
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +45,7 @@ export default class SearchScreen extends Component {
       const _word = Number(this.state.word)
       console.log(_word)
       if (_word == NaN){
-        alert('数字を入力してください')
+        // alert('数字を入力してください')
       } else {
       axios.post('http://ec2-18-223-214-63.us-east-2.compute.amazonaws.com:80/median', {word:_word, count: 5})
         .then(res => {
@@ -57,7 +59,7 @@ export default class SearchScreen extends Component {
     return this.state.kekka.map(data => {
       return <Card>
               <CardItem header bordered>
-                <Text>{data.gamename}</Text>
+                <Text onPress={() => this.props.navigation.navigate('work',{gameid:data.gameid})}>{data.gamename}</Text>
               </CardItem>
               <CardItem footer bordered>
                 <Text>{data.brandname.String}</Text>
