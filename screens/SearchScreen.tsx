@@ -2,10 +2,40 @@ import React, { Component } from 'react';
 import { ScrollView } from "react-native";
 import { Container, Content, Form, Item, Picker,Icon ,Button, Text,Header,Input ,Card, CardItem} from 'native-base';
 import axios from 'axios'
-export default class SearchScreen extends Component {
-  state: { selected2: string; word: string; kekka: any[]; };
-  props: any;
-  constructor(props) {
+
+interface Props{
+  myGames:{
+    gameid:number;
+    gamename:string;
+    median:{
+      Int64:number;
+      Vaild:boolean;
+    };
+    brandname:{
+      String:String;
+      Valid:boolean;
+    };
+  }[];
+  navigation:any;
+}
+interface State{
+  selected2:string;
+  word:string;
+  kekka:{
+      gameid:number;
+      gamename:string;
+      median:{
+        Int64:number;
+        Vaild:boolean;
+      };
+      brandname:{
+        String:String;
+        Valid:boolean;
+      };
+  }[]
+}
+export default class SearchScreen extends Component<Props,State> {
+  constructor(props: Readonly<Props>) {
     super(props);
     this.state = {
       selected2: "key0",
@@ -13,15 +43,15 @@ export default class SearchScreen extends Component {
       kekka:[]
     };
   }
-  onValueChange2(value) {
+  onValueChange2(value: string) {
     this.setState({
       selected2: value
     });
   }
-  _handleTextChange = word => {
+  _handleTextChange = (word: string) => {
     this.setState({ word });
   };
-  _handleSearchResult = kekka => {
+  _handleSearchResult = (kekka: any) => {
     this.setState({ kekka });
   };
   onClickHandler = () => {

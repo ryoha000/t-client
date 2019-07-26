@@ -1,17 +1,47 @@
-import { StyleSheet, Text, View, ScrollView, Picker } from "react-native";
-import React, { Component } from "react";
-import { Container, Header, Content, Tab, Tabs,Button,Card ,CardItem, List,ListItem,Icon} from "native-base";
+import { Text } from "react-native";
+import React from "react";
+import { Container, Tab, Tabs, Button } from "native-base";
 import axios from "axios";
-import PropTypes from "prop-types";
 import Tab1 from "./tabOne";
 import Tab2 from "./tabTwo";
 import Tab3 from "./tabThree";
 import Tab4 from "./tabFour";
 
-class ProfileScreen extends React.Component {
-  state: { myGames: any[]; };
-  props: any;
-  constructor(props) {
+interface Props {
+  myGames:{
+    gameid:number;
+    gamename:{
+      String:string;
+      Valid:boolean;
+    };
+    median:{
+      Int64:number;
+      Vaild:boolean;
+    };
+    intention:number;
+    brandname:string;
+  }[];
+  rButton:(gameID:number) => void;
+  lButton:(gameID:number) => void;
+  navigation:any;
+}
+interface State{
+  myGames:{
+    gameid:number;
+    gamename:{
+      String:string;
+      Valid:boolean;
+    };
+    median:{
+      Int64:number;
+      Vaild:boolean;
+    };
+    intention:number;
+    brandname:string;
+  }[];
+}
+class ProfileScreen extends React.Component<Props,State> {
+  constructor(props: Readonly<Props>) {
     super(props);
     this.state = {
       myGames: []
@@ -25,36 +55,19 @@ class ProfileScreen extends React.Component {
       .then(res => {
         this.setState({ myGames: res.data });
         setTimeout(() => console.log(this.state.myGames), 500);
-        setTimeout(() => console.log(this.state.myGames.filter(function (item,index,array){return (item.intention == 3)})), 500);
+        setTimeout(() => console.log(this.state.myGames.filter(function (item){return (item.intention == 3)})), 500);
       })
       .catch(e => console.log(e));
   }
-  renderGames() {
-    return this.state.myGames.map(data => {
-      return <List
-                leftOpenValue={75}
-                rightOpenValue={-75}
-                renderRow={myGames =>
-              <ListItem header bordered>
-                <Text onPress={() => this.props.navigation.navigate('work')}>{data.gamename.String}</Text>
-                <Text>{data.brandname}</Text>
-              </ListItem>}
-              renderRightHiddenRow={() =>
-              <Button full danger onPress={() => this.props.rButton()}>
-                <Icon active name="arrow-right" />
-              </Button>}
-            />;
-    });
-  }
-  rButtonParent = (newElement) => {
+  rButtonParent = (gameid: number) => {
     this.setState(state => {
-      state.myGames[state.myGames.findIndex(e => e.gameid === newElement.gameid)].intention = state.myGames[state.myGames.findIndex(e => e.gameid === newElement.gameid)].intention -1;
+      state.myGames[state.myGames.findIndex(e => e.gameid === gameid)].intention = state.myGames[state.myGames.findIndex(e => e.gameid === gameid)].intention -1;
       return { myGames: state.myGames }
     })
   };
-  lButtonParent = (newElement) => {
+  lButtonParent = (gameid: number) => {
     this.setState(state => {
-      state.myGames[state.myGames.findIndex(e => e.gameid === newElement.gameid)].intention = state.myGames[state.myGames.findIndex(e => e.gameid === newElement.gameid)].intention +1;
+      state.myGames[state.myGames.findIndex(e => e.gameid === gameid)].intention = state.myGames[state.myGames.findIndex(e => e.gameid === gameid)].intention +1;
       return { myGames: state.myGames }
     })
   };
@@ -92,30 +105,33 @@ class ProfileScreen extends React.Component {
     const c = `今は買わない(${nImahax})`;
     const d = `興味なし(${nNai})`;
     return (
-      <Container backgroundColor="#00CCFF">
+      <Container>
         {/* <ScrollView>{this.renderGames()}</ScrollView> */}
-        <Tabs locked={true} backgroundColor='#00CCFF'>
-          <Tab heading={a} backgroundColor='#00CCFF'>
+        <Tabs locked={true}>
+          <Tab heading={a}>
             <Tab1 
             rButton={this.rButtonParent}
-            myGames={this.state.myGames.filter(function (item,index,array){return (item.intentiion == 3)})}
+            myGames={this.state.myGames.filter(function (item){return (item.intention == 3)})}
             />
           </Tab>
           <Tab heading={b}>
             <Tab2 
             rButton={this.rButtonParent}
             lButton={this.lButtonParent}
-            myGames={this.state.myGames.filter(function (item,index,array){return (item.intentiion == 2)})}
+            myGames={this.state.myGames.filter(function (item){return (item.intention == 2)})}
             />
           </Tab>
           <Tab heading={c}>
             <Tab3 
-            myGames={this.state.myGames.filter(function (item,index,array){return (item.intentiion == 1)})}
+            rButton={this.rButtonParent}
+            lButton={this.lButtonParent}
+            myGames={this.state.myGames.filter(function (item){return (item.intention == 1)})}
             />
           </Tab>
           <Tab heading={d}>
             <Tab4 
-            myGames={this.state.myGames.filter(function (item,index,array){return (item.intentiion == 0)})}
+            lButton={this.lButtonParent}
+            myGames={this.state.myGames.filter(function (item){return (item.intention == 0)})}
             />
           </Tab>
         </Tabs>

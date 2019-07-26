@@ -1,16 +1,81 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { ListView } from 'react-native';
+import { Container, Content, Button, Icon, List, ListItem, Text } from 'native-base';
+interface Props{
+  myGames:{
+    gameid:number;
+    gamename:{
+      String:string;
+      Valid:boolean;
+    };
+    median:{
+      Int64:number;
+      Vaild:boolean;
+    };
+    intention:number;
+    brandname:string;
+  }[];
+  // rButton:(gameID:number) => void;
+  lButton:(gameid:number) => void;
+}
+interface State{
+  basic: boolean;
+  listViewData:{
+    // myGames:{
+      gameid:number;
+      gamename:{
+        String:string;
+        Valid:boolean;
+      };
+      median:{
+        Int64:number;
+        Vaild:boolean;
+      };
+      intention:number;
+      brandname:string;
+    // }[];
+  }[];
+}
 
+export default class Tab4 extends Component<Props,State> {
+  ds: any;
 
-class Tab4 extends React.Component {
+  constructor(props: Readonly<Props>) {
+    super(props);
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.state = {
+      basic: true,
+      listViewData: this.props.myGames,
+      // myGames: this.Props.myGames
+    };
+    console.log(this.state.listViewData,'a')
+    console.log(this.props.myGames,'b')
+  }
+  
   render() {
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     return (
-      <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text>This is Tab4</Text>
-      </View>
+      <Container>
+        <Content>
+          <List
+            leftOpenValue={75}
+            // rightOpenValue={-75}
+            dataSource={this.ds.cloneWithRows(this.state.listViewData)}
+            renderRow={myGames =>
+              <ListItem>
+                <Text> {myGames.gamename} </Text>
+              </ListItem>}
+            renderLeftHiddenRow={(myGames) =>
+              <Button full onPress={() => this.props.lButton(myGames.gameid)}>
+                <Icon active name="arrow-left" />
+              </Button>}
+            // renderRightHiddenRow={(myGames) =>
+            //   <Button full onPress={() => this.props.rButton(myGames.gameID)}>
+            //     <Icon active name="arrow-right" />
+            //   </Button>}
+          />
+        </Content>
+      </Container>
     );
   }
 }
-
-
-export default Tab4;
