@@ -5,12 +5,30 @@ import { Container, Header, Content, Button, Icon, List, ListItem, Text } from '
 const propTypes = {
   myGames: PropTypes.func,
 };
+interface props{
+  myGames:{
+    gameid:number;
+    gamename:{
+      String:string;
+      Valid:boolean;
+    };
+    median:{
+      Int64:number;
+      Vaild:boolean;
+    };
+    intention:number;
+    brandname:string;
+  };
+  rButton:(gameid:number) => gameid;
+}
+interface state{
+  basic: true;
+  listViewData: this.props.myGames;
+}
 
 export default class Tab2 extends Component {
-  state: any;
   ds: any;
-  props: any;
-  static propTypes: { myGames: any; };
+
   constructor(props) {
     super(props);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -50,4 +68,3 @@ export default class Tab2 extends Component {
     );
   }
 }
-Tab2.propTypes = propTypes
