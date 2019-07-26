@@ -7,7 +7,7 @@ const propTypes = {
 };
 interface props{
   myGames:{
-    gameid:number;
+    gameID:number;
     gamename:{
       String:string;
       Valid:boolean;
@@ -19,11 +19,23 @@ interface props{
     intention:number;
     brandname:string;
   };
-  rButton:(gameid:number) => gameid;
+  rButton:(gameid:number) => number;
 }
 interface state{
-  basic: true;
-  listViewData: this.props.myGames;
+  basic: boolean;
+  listViewData:{
+    gameID:number;
+    gamename:{
+      String:string;
+      Valid:boolean;
+    };
+    median:{
+      Int64:number;
+      Vaild:boolean;
+    };
+    intention:number;
+    brandname:string;
+  };
 }
 
 export default class Tab2 extends Component {
