@@ -20,9 +20,16 @@ import TwitterScreen from './screens/TwitterScreen';
 import ConfigScreen from './screens/ConfigScreen';
 import LoginScreen from './screens/LoginScreen'
 import SignupScreen from './screens/SignupScreen'
+import BrandScreen from './screens/BrandScreen'
 
 
 export default class App extends React.Component {
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+  }
   render() {
     const headerNavigationOptions = {
     headerStyle: {
@@ -42,7 +49,8 @@ export default class App extends React.Component {
           headerBackTitle: 'Home'
         }
       },
-      work: { screen: WorkScreen }
+      work: { screen: WorkScreen },
+      brand: { screen: BrandScreen },
     });
 
     HomeStack.navigationOptions = ({ navigation }) => {
@@ -66,6 +74,7 @@ export default class App extends React.Component {
           } 
       },
       work: { screen: WorkScreen },
+      brand: { screen: BrandScreen },
     });
 
     SearchStack.navigationOptions = ({ navigation }) => {
@@ -109,6 +118,7 @@ export default class App extends React.Component {
           headerTitle: 'Signup',
        }
       },
+      brand: { screen: BrandScreen },
     });
 
     ProfileStack.navigationOptions = ({ navigation }) => {

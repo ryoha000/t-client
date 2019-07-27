@@ -4,18 +4,6 @@ import { Container, Content, Form, Item, Picker,Icon ,Button, Text,Header,Input 
 import axios from 'axios'
 
 interface Props{
-  myGames:{
-    gameid:number;
-    gamename:string;
-    median:{
-      Int64:number;
-      Vaild:boolean;
-    };
-    brandname:{
-      String:String;
-      Valid:boolean;
-    };
-  }[];
   navigation:any;
 }
 interface State{
@@ -28,6 +16,7 @@ interface State{
         Int64:number;
         Vaild:boolean;
       };
+      brandid:number;
       brandname:{
         String:String;
         Valid:boolean;
@@ -92,7 +81,7 @@ export default class SearchScreen extends Component<Props,State> {
                 <Text onPress={() => this.props.navigation.navigate('work',{gameid:data.gameid})}>{data.gamename}</Text>
               </CardItem>
               <CardItem footer bordered>
-                <Text>{data.brandname.String}</Text>
+                <Text onPress={() => this.props.navigation.navigate('brand',{brandid:data.brandid})}>{data.brandname.String}</Text>
               </CardItem>
             </Card>;
     });

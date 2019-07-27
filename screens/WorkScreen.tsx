@@ -1,10 +1,11 @@
 import React from 'react';
-import {Text, View } from 'react-native';
+// import RF from "react-native-responsive-fontsize";
+import {Text, View, Linking,Image,ScrollView } from 'react-native';
 import axios from 'axios'
 import { Container } from "native-base";
 
 interface Props{
-  gameid:number;
+  brandid:number;
   navigation:any;
 }
 interface State{
@@ -44,7 +45,7 @@ interface State{
       url:string;
     };
     suru:{
-      surup:number;
+      surup:string;
       url:string;
     }[];
   }[];
@@ -69,6 +70,7 @@ class WorkScreen extends React.Component<Props,State> {
         this.setState({ amasuru: res.data.amasuru })
         this.setState({ intention: res.data.intention })
         setTimeout(() => console.log(this.state.game,'b'), 500)
+        setTimeout(() => console.log(this.state.amasuru,'p'), 500)
       })
       .catch(e => console.log(e));
   }
@@ -77,35 +79,74 @@ class WorkScreen extends React.Component<Props,State> {
       if(this.state.game.sellday){
         if(this.state.game.median){
           if(this.state.game.stdev){
-            return  <View>
-            <Text>{this.state.game.gamename.String}</Text>
-            <Text>{this.state.game.brandname}</Text>
-            <Text>中央値：{this.state.game.median.Int64}点</Text>
-            <Text>データ数：{this.state.game.stdev.Int64}</Text>
-            <Text>発売日：{this.state.game.sellday.String}</Text>
-            </View>;
-          }
-
+            if(this.state.game.shoukai){
+              if(this.state.game.shoukai.String != undefined){
+                return  <View>
+                <Text 
+                // style={{fontSize: RF(4.0)}}
+                >{this.state.game.gamename.String}</Text>
+                <Text 
+                style={{color:"#0033CC"}}
+                onPress={() => this.props.navigation.navigate('brand',{brandid:this.state.game.brandid})}
+                >{this.state.game.brandname}</Text>
+                <Text>中央値：{this.state.game.median.Int64}点</Text>
+                <Text>データ数：{this.state.game.stdev.Int64}</Text>
+                <Text>発売日：{this.state.game.sellday.String}</Text>
+                <Text 
+                onPress={()=>Linking.openURL(this.state.game.shoukai!.String).catch(err => console.error('URLを開けませんでした。', err))}
+                style={{color:"#0033CC"}}
+                >OHP：{this.state.game.shoukai.String}</Text>
+                </View>;
+              }
+            }
           }
         }
       }
     }
-
-  
-  // renderPriceInfo(){
-  
-  //     return  <View>
-  //     <Text>Amazon{data.ama.amap}  {data.ama.souryo}  {data.ama.url}</Text>
-  //     <Text>駿河屋{data.suru.surup}  {data.suru.url}</Text>
-  //     </View>;
-
-  // }
+  }
+  renderPriceInfo(){
+    if(this.state.amasuru!=[]){    
+      // const { width, height } = Dimensions.get('window');
+      return this.state.amasuru.map(data1 => {
+        const asin=data1.ama.url.substr(42,10);
+        console.log(asin)
+        return data1.suru.map(data => {
+          if(data.surup=='駿河屋無し'){
+            return <View>
+          <Image style={{width: 350, height: 350,marginBottom:0}} resizeMode='contain' source={{uri:'http://images-jp.amazon.com/images/P/' + asin + '.09.LZZZZZZZ'}}></Image>
+          <Text
+          onPress={()=>Linking.openURL(data1.ama.url).catch(err => console.error('URLを開けませんでした。', err))}
+          style={{marginTop:0,color:"#0033CC"}}
+          >{data1.ama.amap} {data1.ama.souryo}</Text>
+          <Text>{data.surup}</Text>
+        </View>
+          } else {
+            return <View>
+          <Image style={{width: 350, height: 350}} resizeMode='contain' source={{uri:'http://images-jp.amazon.com/images/P/' + asin + '.09.LZZZZZZZ'}}></Image>
+          <Text
+          style={{color:"#0033CC"}}
+          onPress={()=>Linking.openURL(data1.ama.url).catch(err => console.error('URLを開けませんでした。', err))}
+          >{data1.ama.amap} {data1.ama.souryo}</Text>
+          <Text
+          style={{color:"#0033CC"}}
+          onPress={()=>Linking.openURL(data.url).catch(err => console.error('URLを開けませんでした。', err))}
+          >{data.surup}</Text>
+        </View>
+          }
+        })
+      })
+    } else {
+      return <Text>商品が見つかりませんでした。ダウンロード版のみかもしれません。</Text>
+    }
+  }
   render() {
     return (
-      <Container>{this.renderGameInfo()}</Container>
+      <Container>
+        <ScrollView>{this.renderGameInfo()}</ScrollView>
+        <ScrollView>{this.renderPriceInfo()}</ScrollView>
+      </Container>
     );
   }
 }
-
 
 export default WorkScreen;
