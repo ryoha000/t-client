@@ -10,7 +10,6 @@ import {
 
 
 
-import WelcomeScreen from './screens/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen'; 
 import SearchScreen from './screens/SearchScreen'; 
 import DetailSearchScreen from './screens/DetailSearchScreen';
@@ -51,6 +50,18 @@ export default class App extends React.Component {
       },
       work: { screen: WorkScreen },
       brand: { screen: BrandScreen },
+      login: { screen: LoginScreen,
+        navigationOptions: {
+          ...headerNavigationOptions,
+          headerTitle: 'Login',
+       }
+      },
+      signup: { screen: SignupScreen,
+        navigationOptions: {
+          ...headerNavigationOptions,
+          headerTitle: 'Signup',
+       }
+      },
     });
 
     HomeStack.navigationOptions = ({ navigation }) => {
@@ -75,6 +86,18 @@ export default class App extends React.Component {
       },
       work: { screen: WorkScreen },
       brand: { screen: BrandScreen },
+      login: { screen: LoginScreen,
+        navigationOptions: {
+          ...headerNavigationOptions,
+          headerTitle: 'Login',
+       }
+      },
+      signup: { screen: SignupScreen,
+        navigationOptions: {
+          ...headerNavigationOptions,
+          headerTitle: 'Signup',
+       }
+      },
     });
 
     SearchStack.navigationOptions = ({ navigation }) => {
@@ -170,7 +193,6 @@ export default class App extends React.Component {
 
     const NavigatorTab = createAppContainer(
       createSwitchNavigator({
-        welcome: { screen: WelcomeScreen },
         main: { screen: MainTab }
       })
     );

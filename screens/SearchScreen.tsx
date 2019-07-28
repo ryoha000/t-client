@@ -50,7 +50,15 @@ export default class SearchScreen extends Component<Props,State> {
         .then(res => {
           this.setState({ kekka: res.data });
           setTimeout(() => console.log(this.state.kekka),500);
-        });
+        })
+        .catch(e => {
+          if (e == 'Error: Request failed with status code 403'){
+            this.props.navigation.navigate('login')
+            console.log(e)
+          }
+          console.log(e,"a")
+        }
+       );
     }
     if (this.state.selected2 == "key1"){
       console.log(this.state.word)
@@ -58,7 +66,14 @@ export default class SearchScreen extends Component<Props,State> {
         .then(res => {
           this.setState({ kekka: res.data });
           setTimeout(() => console.log(this.state.kekka),500);
-        });
+        }).catch(e => {
+          if (e == 'Error: Request failed with status code 403'){
+            this.props.navigation.navigate('login')
+            console.log(e)
+          }
+          console.log(e,"a")
+        }
+       );
     }
     if (this.state.selected2 == "key2"){
       const _word = Number(this.state.word)
@@ -70,7 +85,14 @@ export default class SearchScreen extends Component<Props,State> {
         .then(res => {
           this.setState({ kekka: res.data });
           setTimeout(() => console.log(this.state.kekka),500);
-        });
+        }).catch(e => {
+          if (e == 'Error: Request failed with status code 403'){
+            this.props.navigation.navigate('login')
+            console.log(e)
+          }
+          console.log(e,"a")
+        }
+       );
       }
     }
   }
@@ -118,9 +140,10 @@ export default class SearchScreen extends Component<Props,State> {
               </Item>
               </Header>
               <Button 
-              rounded info
+              rounded 
+              info
+              full
               onPress={this.onClickHandler}
-              // onPress={() => {search();}}
               >
                 <Text>Search</Text>
               </Button>

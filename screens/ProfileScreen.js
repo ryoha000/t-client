@@ -3,19 +3,16 @@ import React from "react";
 import { Container, Tab, Tabs, Button,Icon } from "native-base";
 import axios from "axios";
 import Tab1 from "./tabOne";
-import Tab2 from "./tabTwo";
-import Tab3 from "./tabThree";
-import Tab4 from "./tabFour";
-
 
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      myGames: []
+      myGames: [],
+      date:undefined
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     axios
       .get(
         "http://ec2-18-223-214-63.us-east-2.compute.amazonaws.com:80/mypage"
@@ -25,7 +22,38 @@ class ProfileScreen extends React.Component {
         setTimeout(() => console.log(this.state.myGames), 500);
         setTimeout(() => console.log(this.state.myGames.filter(function (item){return (item.intention == 1)})), 500);
       })
-      .catch(e => console.log(e));
+      .catch(e => {
+        if (e == 'Error: Request failed with status code 403'){
+          this.props.navigation.navigate('signup')
+          console.log(e)
+        }
+        console.log(e,"a")
+      }
+     );
+    // var d=new Date();
+    // this.setState({ date:d.getTime()})
+  }
+  kousin(){
+    axios
+    .get(
+      "http://ec2-18-223-214-63.us-east-2.compute.amazonaws.com:80/mypage"
+    )
+    .then(res => {
+      this.setState({ myGames: res.data });
+      setTimeout(() => console.log(this.state.myGames), 500);
+      setTimeout(() => console.log(this.state.myGames.filter(function (item){return (item.intention == 1)})), 500);
+    })
+    .catch(e => {
+      if (e == 'Error: Request failed with status code 403'){
+        // this.props.navigation.navigate('login')
+        console.log(e,'profile_kousin')
+      }
+      console.log(e,"a")
+    }
+   );
+  }
+  componentDidMount() {                                  // （5）
+    this.interval = setInterval(() => this.kousin(), 10000);
   }
   rButtonParent = (gameid) => {
     if(this.state.myGames[this.state.myGames.findIndex(e => e.gameid == gameid)].intention != 0){
@@ -49,6 +77,12 @@ class ProfileScreen extends React.Component {
       alert('そちらへは移動できません')
     }
   };
+  titleParent = (gameid) => {
+    this.props.navigation.navigate('work',{gameid:gameid})
+  }
+  brandParent = (brandid) => {
+    this.props.navigation.navigate('brand',{brandid:brandid})
+  }
   render() {
     let nBought = 0;
     let nAri = 0;
@@ -90,6 +124,8 @@ class ProfileScreen extends React.Component {
             <Tab1 
             rButton={this.rButtonParent}
             lButton={this.lButtonParent}
+            title={this.titleParent}
+            brand={this.brandParent}
             myGames={this.state.myGames.filter(function (item){return (item.intention == 3)})}
             />
           </Tab>
@@ -97,6 +133,8 @@ class ProfileScreen extends React.Component {
             <Tab1 
             rButton={this.rButtonParent}
             lButton={this.lButtonParent}
+            title={this.titleParent}
+            brand={this.brandParent}
             myGames={this.state.myGames.filter(function (item){return (item.intention == 2)})}
             />
           </Tab>
@@ -104,6 +142,8 @@ class ProfileScreen extends React.Component {
             <Tab1 
             rButton={this.rButtonParent}
             lButton={this.lButtonParent}
+            title={this.titleParent}
+            brand={this.brandParent}
             myGames={this.state.myGames.filter(function (item){return (item.intention == 1)})}
             />
           </Tab>
@@ -111,6 +151,8 @@ class ProfileScreen extends React.Component {
             <Tab1 
             rButton={this.rButtonParent}
             lButton={this.lButtonParent}
+            title={this.titleParent}
+            brand={this.brandParent}
             myGames={this.state.myGames.filter(function (item){return (item.intention == 0)})}
             />
           </Tab>

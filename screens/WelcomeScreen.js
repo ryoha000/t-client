@@ -42,11 +42,11 @@ class WelcomeScreen extends React.Component {
     }
   }
 
-  // onStartButtonPress = async () => {
-  //   await AsyncStorage.setItem('isInitialized', 'true');
+  onStartButtonPress = async () => {
+    await AsyncStorage.setItem('isInitialized', 'true');
 
-  //   this.props.navigation.navigate('main');
-  // }
+    this.props.navigation.navigate('main');
+  }
 
   renderSlides() {
     return SLIDE_DATA.map((slide, index) => {
@@ -61,7 +61,7 @@ class WelcomeScreen extends React.Component {
           <Button
           title="start!"
           onPress={() => {
-            this.props.navigation.navigate('main');
+            this.props.navigation.navigate('signup');
           }}
           />
         </View>
