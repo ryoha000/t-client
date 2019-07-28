@@ -103,7 +103,7 @@ export default class SearchScreen extends Component<Props,State> {
                 <Text onPress={() => this.props.navigation.navigate('work',{gameid:data.gameid})}>{data.gamename}</Text>
               </CardItem>
               <CardItem footer bordered>
-                <Text onPress={() => this.props.navigation.navigate('brand',{brandid:data.brandid})}>{data.brandname.String}</Text>
+                <Text onPress={() => this.props.navigation.navigate('brand',{brandid:data.brandid})}>{data.brandname.String}      {data.median.Int64}点</Text>
               </CardItem>
             </Card>;
     });
