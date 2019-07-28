@@ -7,6 +7,7 @@ const Tab1Item = ({content,rButton,lButton,title,brand}) => {
     leftOpenValue={75}
     rightOpenValue={-75}
     style={{margin:0}}
+    style={{margin:0}}
     left={
       <Button onPress={() =>lButton(content.gameid)}>
         <Icon type="FontAwesome" name="arrow-left" />
@@ -15,8 +16,9 @@ const Tab1Item = ({content,rButton,lButton,title,brand}) => {
     body={
       // <List style={{margin:0}}>
       //   <ListItem header bordered style={{margin:0}}>
-          <Text onPress={() => title(content.gameid)} style={{margin:0}}>{content.gamename.String}{"\n"}{content.brandname}      {content.median.Int64}点</Text>
-        // </ListItem>
+      // <ListItem onPress={() => title(content.gameid)}>
+          <Text onPress={() => title(content.gameid)}>{content.gamename.String}{"\n"}{content.brandname}      {content.median.Int64}点</Text>
+      // </ListItem>
         // <ListItem footer bordered style={{margin:0}}>
         //   <Text onPress={() => brand(content.brandid)} style={{margin:0}}>{content.brandname}</Text>
         // </ListItem> 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native";
 import { Container, Content, Form, Item, Picker,Icon ,Button, Text,Header,Input ,Card, CardItem} from 'native-base';
 import axios from 'axios'
 
@@ -99,12 +99,16 @@ export default class SearchScreen extends Component<Props,State> {
   renderGames() {
     return this.state.kekka.map(data => {
       return <Card>
-              <CardItem header bordered>
-                <Text onPress={() => this.props.navigation.navigate('work',{gameid:data.gameid})}>{data.gamename}</Text>
-              </CardItem>
-              <CardItem footer bordered>
-                <Text onPress={() => this.props.navigation.navigate('brand',{brandid:data.brandid})}>{data.brandname.String}      {data.median.Int64}点</Text>
-              </CardItem>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('work',{gameid:data.gameid})}>
+                <CardItem header bordered>
+                  <Text>{data.gamename}</Text>
+                </CardItem>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('brand',{brandid:data.brandid})}>
+                <CardItem footer bordered>
+                  <Text>{data.brandname.String}      {data.median.Int64}点</Text>
+                </CardItem>
+              </TouchableOpacity>
             </Card>;
     });
   }

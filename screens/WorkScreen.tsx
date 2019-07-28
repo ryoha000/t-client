@@ -80,6 +80,30 @@ class WorkScreen extends React.Component<Props,State> {
       }
         );
   }
+  componentDidUpdate() {
+
+    // props.id が変更されたら再フェッチ
+    if (this.props.navigation.state.params.gameid !== this.state.game.gameid) {
+      axios
+      .get(
+        "http://ec2-18-223-214-63.us-east-2.compute.amazonaws.com:80/games/" + this.props.navigation.state.params.gameid
+      )
+      .then(res => {
+        this.setState({ game: res.data.game })
+        this.setState({ amasuru: res.data.amasuru })
+        this.setState({ intention: res.data.intention })
+        setTimeout(() => console.log(this.state.game,'b'), 500)
+        setTimeout(() => console.log(this.state.amasuru,'p'), 500)
+      })
+      .catch(e => {
+        if (e == 'Error: Request failed with status code 403'){
+          this.props.navigation.navigate('signup')
+          console.log(e,'work')
+        }
+      }
+        );
+    }
+  }
   renderGameInfo(){
     if(this.state.game.gamename){
       if(this.state.game.sellday){
