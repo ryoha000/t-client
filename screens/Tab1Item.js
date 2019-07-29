@@ -17,7 +17,7 @@ const Tab1Item = ({content,rButton,lButton,title,brand}) => {
       // <List style={{margin:0}}>
       //   <ListItem header bordered style={{margin:0}}>
       // <ListItem onPress={() => title(content.gameid)}>
-          <Text onPress={() => title(content.gameid)}>{content.gamename.String}{"\n"}{content.brandname}      {content.median.Int64}点</Text>
+          <Text onPress={() => title(content.gameid)} style={{lineHeight:20}}>{content.gamename.String}{"\n"}{content.brandname}      {content.median.Int64}点</Text>
       // </ListItem>
         // <ListItem footer bordered style={{margin:0}}>
         //   <Text onPress={() => brand(content.brandid)} style={{margin:0}}>{content.brandname}</Text>

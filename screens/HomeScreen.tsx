@@ -96,7 +96,7 @@ class HomeScreen extends React.Component<Props,State> {
           <Text>{data.osusume1.brandname}</Text>
           <Text>中央値：{data.osusume1.median.Int64}</Text>
           <Text>　管理人のオススメポイント</Text>
-          <Text>{data.osusume1.message}</Text>
+          <Text style={{lineHeight:20}}>{data.osusume1.message}</Text>
         </Card>
         </TouchableOpacity>
       })

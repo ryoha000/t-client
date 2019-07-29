@@ -18,11 +18,11 @@ export default class LoginScreen extends Component {
   onClickHandler = () => {
     axios.post('http://ec2-18-223-214-63.us-east-2.compute.amazonaws.com:80/login', { username: this.state.username, password: this.state.password})
       .then( res =>{
-        if(res.data==null){
+        // if(res.data==null){
           // this.props.navigation.navigate('home')
           alert('ログインに成功しました')
           this.props.navigation.navigate('home')
-        }
+        // }
       }).catch(e => {
         if (e == 'Error: Request failed with status code 500'){
           console.log(e,'login')

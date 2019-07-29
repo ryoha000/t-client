@@ -6,7 +6,7 @@ class TwitterScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text>Twitter連携</Text>
+        <Text>工事中です＞＜</Text>
       </View>
     );
   }

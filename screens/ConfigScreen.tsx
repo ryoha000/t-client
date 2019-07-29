@@ -8,16 +8,17 @@ class ConfigScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text>config</Text>
-        <Button
+        {/* <Text>config</Text> */}
+        {/* <Button
           // icon={{name: 'mark-twitter', type: 'octicon'}}
           title="Twitter連携"
           onPress={() => this.props.navigation.navigate('twitter')}
-        />
+        /> */}
         <Button
           title="login"
           onPress={() => this.props.navigation.navigate('login')}
         />
+        <Text></Text>
         <Button
           title="signup"
           onPress={() => this.props.navigation.navigate('signup')}

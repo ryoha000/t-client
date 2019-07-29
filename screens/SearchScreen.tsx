@@ -101,7 +101,7 @@ export default class SearchScreen extends Component<Props,State> {
       return <Card>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('work',{gameid:data.gameid})}>
                 <CardItem header bordered>
-                  <Text>{data.gamename}</Text>
+                  <Text style={{lineHeight:20}}>{data.gamename}</Text>
                 </CardItem>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('brand',{brandid:data.brandid})}>
